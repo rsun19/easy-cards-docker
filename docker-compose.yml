@@ -1,4 +1,14 @@
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/ssl:/etc/nginx/ssl:ro
+    restart: always
+
   backend:
     build:
       context: ./easy-cards-express
@@ -23,7 +33,6 @@ services:
       - REDIRECT_URI=${REDIRECT_URI}
       - AUTH_SECRET=${AUTH_SECRET}
       - PRIVATE_KEY=${FRONTEND_PRIVATE_KEY}
-      - BASE_URL=${BASE_URL}
       - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
     container_name: frontend
     ports:
