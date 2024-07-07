@@ -1,8 +1,8 @@
 services:
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ./easy-cards-express
+      dockerfile: Dockerfile.production
     container_name: backend
     ports:
       - 9000:9000
@@ -11,15 +11,12 @@ services:
       - PRIVATE_KEY=${PRIVATE_KEY}
     depends_on:
       - postgres
-    volumes:
-      - ./backend:/backend
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: ./easy-cards
+      dockerfile: Dockerfile.production
     environment:
-      - NODE_ENV=development 
       - AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
       - AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
@@ -32,8 +29,6 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/frontend
 
   postgres:
     container_name: postgres
