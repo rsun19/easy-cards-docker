@@ -1,0 +1,6 @@
+[submodule "easy-cards-express"]
+	path = easy-cards-express
+	url = https://github.com/rsun19/easy-cards-express
+[submodule "easy-cards"]
+	path = easy-cards
+	url = https://github.com/rsun19/easy-cards

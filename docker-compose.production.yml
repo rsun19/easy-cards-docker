@@ -10,12 +10,12 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./sql/generated.sql:/docker-entrypoint-initdb.d/generated.sql
 
   backend:
     build:
       context: ./easy-cards-express
       dockerfile: Dockerfile.production1
-      network: host
     container_name: backend
     ports:
       - 9000:9000
@@ -29,7 +29,6 @@ services:
     build:
       context: ./easy-cards
       dockerfile: Dockerfile.production
-      network: host
     environment:
       - AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
       - AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
@@ -58,4 +57,4 @@ services:
       - "3040:80"
 
 volumes:
-  postgres_data:
+  postgres_data: {}
