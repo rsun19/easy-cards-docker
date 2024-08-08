@@ -15,7 +15,7 @@ services:
   backend:
     build:
       context: ./easy-cards-express
-      dockerfile: Dockerfile.production1
+      dockerfile: Dockerfile.production
     container_name: backend
     ports:
       - 9000:9000
