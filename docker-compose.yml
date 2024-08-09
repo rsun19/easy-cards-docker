@@ -1,40 +1,4 @@
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend
-    ports:
-      - 9000:9000
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - PRIVATE_KEY=${PRIVATE_KEY}
-    depends_on:
-      - postgres
-    volumes:
-      - ./backend:/backend
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=development 
-      - AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
-      - AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - REDIRECT_URI=${REDIRECT_URI}
-      - AUTH_SECRET=${AUTH_SECRET}
-      - PRIVATE_KEY=${FRONTEND_PRIVATE_KEY}
-      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
-    container_name: frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    volumes:
-      - ./frontend:/frontend
-
   postgres:
     container_name: postgres
     image: postgres
@@ -46,6 +10,36 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./sql/generated.sql:/docker-entrypoint-initdb.d/generated.sql
+
+  backend:
+    build:
+      context: ./easy-cards-express
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./easy-cards
+      dockerfile: Dockerfile
+    environment:
+      - AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}
+      - AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_CLIENT_TO_API_URL=${NEXT_PUBLIC_CLIENT_TO_API_URL}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - PRIVATE_KEY=${FRONTEND_PRIVATE_KEY}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
+      - AUTH_URL=${AUTH_URL}
+    container_name: frontend
+    depends_on:
+      - backend
 
 volumes:
-  postgres_data:
+  postgres_data: {}

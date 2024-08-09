@@ -1,1 +1,4 @@
 .env
+certbot
+nginx.conf
+nginx.production.conf
