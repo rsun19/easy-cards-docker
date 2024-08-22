@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE IF NOT EXISTS "Answer" (
+CREATE TABLE "Answer" (
     "id" SERIAL NOT NULL,
     "answer" TEXT NOT NULL,
     "isCorrect" BOOLEAN NOT NULL DEFAULT true,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS "Answer" (
 );
 
 -- CreateTable
-CREATE TABLE IF NOT EXISTS "Question" (
+CREATE TABLE "Question" (
     "id" SERIAL NOT NULL,
     "question" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
@@ -22,29 +22,35 @@ CREATE TABLE IF NOT EXISTS "Question" (
 );
 
 -- CreateTable
-CREATE TABLE IF NOT EXISTS "Set" (
+CREATE TABLE "Set" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "subject" TEXT,
     "public" BOOLEAN NOT NULL DEFAULT false,
     "visits" INTEGER,
+    "userId" INTEGER NOT NULL,
     "edit" TEXT[],
     "visit" TEXT[],
     "visitLink" TEXT,
-    "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Set_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE IF NOT EXISTS "User" (
+CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "refreshToken" TEXT,
     "blacklistedTokens" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "banned" BOOLEAN NOT NULL DEFAULT false,
+    "bannedReason" TEXT,
+    "deactivated" BOOLEAN NOT NULL DEFAULT false,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "editShared" INTEGER[],
+    "viewShared" INTEGER[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
