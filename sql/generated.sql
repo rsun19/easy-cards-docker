@@ -17,6 +17,7 @@ CREATE TABLE "Question" (
     "userId" INTEGER NOT NULL,
     "setId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "star" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
@@ -28,10 +29,10 @@ CREATE TABLE "Set" (
     "subject" TEXT,
     "public" BOOLEAN NOT NULL DEFAULT false,
     "visits" INTEGER,
-    "userId" INTEGER NOT NULL,
     "edit" TEXT[],
     "visit" TEXT[],
     "visitLink" TEXT,
+    "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Set_pkey" PRIMARY KEY ("id")
